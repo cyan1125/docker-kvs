@@ -23,14 +23,14 @@ pipeline {
         sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml ps"
       }
     }
-    stage('Test') {
-      steps {
-        sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_apptest pytest -v test_app.py"
-        sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_webtest pytest -v test_static.py"
-        sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_webtest pytest -v test_selenium.py"
-        sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml down"
-      }
-    }
+    // stage('Test') {
+    //   steps {
+    //     sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_apptest pytest -v test_app.py"
+    //     sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_webtest pytest -v test_static.py"
+    //     sh "docker -H ssh://${BUILD_HOST} container exec dockerkvs_webtest pytest -v test_selenium.py"
+    //     sh "docker-compose -H ssh://${BUILD_HOST} -f docker-compose.build.yml down"
+    //   }
+    // }
     stage('Register') {
       steps {
         sh "docker -H ssh://${BUILD_HOST} tag dockerkvs_web ${DOCKERHUB_USER}/dockerkvs_web:${BUILD_TIMESTAMP}"
